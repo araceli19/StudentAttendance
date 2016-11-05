@@ -1,5 +1,5 @@
 <?php
-include('login.php'); // Includes Login Script
+include('login.php'); // Includes Login
 
 if(isset($_SESSION['login_user'])){
 header("location: profile.php");
@@ -13,7 +13,7 @@ header("location: profile.php");
 </head>
 <body>
 <div id="main">
-<h1>Login Example</h1>
+<h1>PHP Login Session </h1>
 <div id="login">
 <h2>Login Form</h2>
 <form action="" method="post">
