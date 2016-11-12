@@ -1,6 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION['Username']) ) { //checking whether admin has authenticated
+    header('Location: login.php');
+    exit;    
+}
 //includes session 
-include('session.php'); //for testing purpose, comment out to see basic layout of page
+//include('session.php'); //for testing purpose, comment out to see basic layout of page
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,41 +1,51 @@
 <?php
-session_start(); // Starting Session
+session_start();
 
-  $error='';
-  if (isset($_POST['submit'])) {
-    if (empty($_POST['username']) || empty($_POST['password'])) {
-      $error = "Username or Password is invalid";
-    }
-  else
-    {
+include 'connection/connection.php';
 
-      $Username=$_POST['Username'];
-      $Password=$_POST['Password'];
+$connection = getDatabaseConnection();
 
-      //connection wit localhost
-      $connection = mysql_connect("localhost", "root", "");
+$username = $_POST['Username'];
+$password = $_POST['Password'];  //hash("sha1", $_POST['password');
 
-      //start injection
-      // Using MySQL injection for Security
-      $Username = stripslashes($Username);
-      $Password = stripslashes($Password);
-      $Username = mysql_real_escape_string($Username);
-      $Password = mysql_real_escape_string($Password);
+$sql = "SELECT * 
+        FROM Login
+        WHERE Username = '$username' 
+        AND Password = '$password'"; //Not preventing SQL injection!
 
-    $db = mysql_select_db("StudentAttendace", $connection);
+$sql = "SELECT * 
+        FROM Login
+        WHERE Username = :username 
+        AND Password = :password";  
+        
+$namedParameters = array();
 
-      //get query
-      $query = mysql_query("select * from Login where password='$Password' AND Username='$Username'", $connection);
-      $rows = mysql_num_rows($query);
+$namedParameters[':username'] = $username;
+$namedParameters[':password'] = $password;
+$statement = $connection->prepare($sql);
+$statement->execute($namedParameters);
+$result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if ($rows == 1) {
-            $_SESSION['login_user']=$Username; // start session
-            header("location: profile.php"); //send to another page
-            }
-          else {
-          $error = "Username or Password is invalid";
-          }
-        mysql_close($connection); // end the connection of mysql
-    }
+ print_r($result);
+
+if (empty ($result)) {
+    //the username or password were wrong
+    echo "Wrong username/password!";
+   
+} else {
+    
+    $_SESSION['Username'] = $username;
+   // $_SESSION['adminName'] = $result['Name'] . "  " . $result['LastName'];
+    
+    header("Location: StudentAttendance.php");
+    
 }
+
+
+
+
+
+
+
 ?>
+
