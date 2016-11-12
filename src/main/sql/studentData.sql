@@ -1,6 +1,7 @@
 
 INSERT INTO Login (Username,Name,LastName, Password) VALUES ( "Sal", "Salvador","Ramirez","123");
 INSERT INTO Login (Username,Name,LastName, Password) VALUES ( "Jozy", "Jose","Cortez","123");
+INSERT INTO Login (Username,Name,LastName, Password) VALUES ( "celi19", "Araceli","Gopar","123");
                        
                        
 INSERT INTO StudentInfo(name, lastName, grade, school, level, custodyIssueDescription, custodyIssue, needCurrentApplication)
