@@ -1,49 +1,103 @@
 <?php
-session_start();
-if (!isset($_SESSION['Username']) ) { //checking whether admin has authenticated
-    header('Location: login.php');
-    exit;    
-}
-//includes session 
-//include('session.php'); //for testing purpose, comment out to see basic layout of page
-?>
+    session_start();
+    include_once("searchStudent.php");
+    if (!isset($_SESSION['Username']) ) { //checking whether admin has authenticated
+        header('Location: login.php');
+        exit;    
+}?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Your Home Page</title>
+
   <link href="style.css" rel="stylesheet" type="text/css">
+   
 </head>
-<body>
-    <div id="profile">
-      <b id="welcome">Welcome : <i><?php echo $_SESSION['Username'] ?></i></b>
-      <b id="logout"><a href="logout.php">Log Out</a></b>
-    <h1>Attendace</h1>
-    
-    <p>Tab Example:</p>
-
-    <h3>Search By:</h3>
-
-    <ul>
-      Name:
-      <a href="#A">A</a> | <a href="#B">B</a> | <a href="#C">C</a> | <a href="#D">D</a> | <a href="#E">E</a> |
-      <a href="#F">F</a> | <a href="#G">G</a> | <a href="#H">H</a> | <a href="#I">I</a> | <a href="#J">J</a> |
-      <a href="#K">K</a> | <a href="#L">L</a> | <a href="#M">M</a> | <a href="#N">N</a> | <a href="#O">O</a> |
-      <a href="#P">P</a> | <a href="#Q">Q</a> | <a href="#R">R</a> | <a href="#S">S</a> | <a href="#T">T</a> |
-      <a href="#U">U</a> | <a href="#V">V</a> | <a href="#W">W</a> | <a href="#X">X</a> | <a href="#Y">Y</a> |
-      <a href="#Z">Z</a>
-    </ul>
-
-
-    <ul>
-      Lastname:
-      <a href="#A">A</a> | <a href="#B">B</a> | <a href="#C">C</a> | <a href="#D">D</a> | <a href="#E">E</a> |
-      <a href="#F">F</a> | <a href="#G">G</a> | <a href="#H">H</a> | <a href="#I">I</a> | <a href="#J">J</a> |
-      <a href="#K">K</a> | <a href="#L">L</a> | <a href="#M">M</a> | <a href="#N">N</a> | <a href="#O">O</a> |
-      <a href="#P">P</a> | <a href="#Q">Q</a> | <a href="#R">R</a> | <a href="#S">S</a> | <a href="#T">T</a> |
-      <a href="#U">U</a> | <a href="#V">V</a> | <a href="#W">W</a> | <a href="#X">X</a> | <a href="#Y">Y</a> |
-      <a href="#Z">Z</a>
-    </ul>
-
+<script type="text/javascript">
+        
+            function alphabetSearchName(let){
+                document.location  = "StudentAttendance.php?fname="+let; }
+                
+            function alphabetSearchLastName(let){
+                document.location  = "StudentAttendance.php?lastName="+let; }
+            
+        </script>
+<body id="backg">
+     <h1 align="center">Attendace</h1>
+      <b>Welcome <?php echo $_SESSION['Username'] ?>!</b>
+          <b id="logout"><a href="logout.php">Log Out</a></b> <br> </br>
+          
+        <div id="profile">
+     
+            <h3>Search By:</h3>
+         Name: 
+             <script> 
+                    var  byName = "";
+                    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    var letterArray = letters.split("");
+                    for(var i = 0; i < 26; i++){
+                         var fname =letterArray.shift();
+                         byName += '<button name =\''+fname+'\' id =\''+fname+'\' class="mybtns" onclick="alphabetSearchName(\''+fname+'\');">'+fname+'</button>';
+                    }
+            </script>
+            <script> document.write(byName); </script>
+      
+              <br><br>
+         Last Name: 
+            <script> 
+                var byLastName = "";
+                var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var letterArray = letters.split("");
+                for(var i = 0; i < 26; i++){
+                     var lastName = letterArray.shift();
+                     byLastName += '<button name =\''+lastName+'\' id =\''+lastName+'\' class="mybtns" onclick="alphabetSearchLastName(\''+lastName+'\');">'+lastName+'</button>';
+                }
+            </script>
+            <script> document.write(byLastName); </script>
     </div>
+    <div>
+            <?php 
+                $firstNameData = getStudentFirstName();
+                if(!empty($firstNameData)){
+                     ?>   <h4> Students Found: </h4> <?php
+                         
+                        echo "<table id='t01'>";
+      
+                        echo "<tr>". "<td>"."Name"."</td>" . "<td>". "Last Name". "</td>"."</tr>";
+                        echo "<tr>";
+                        
+                       foreach ($firstNameData as $record) {
+                         
+                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName'] . "</td>";
+                         echo "</tr>";
+                        }
+                     
+                         echo "</table>";
+                         
+                }   
+            
+                 $lastNameData = getStudentLastName();
+                
+                
+                if(!empty($lastNameData)){
+                   
+                         
+                        echo "<table id='t01'>";
+      
+                        echo "<tr>". "<td>"."Name"."</td>" . "<td>". "Last Name". "</td>"."</tr>";
+                        echo "<tr>";
+                        
+                       foreach ($lastNameData as $record) {
+                         
+                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName'] . "</td>";
+                         echo "</tr>";
+                        }
+                     
+                         echo "</table>";
+                         
+                }   
+                
+            ?>
+        </div>
 </body>
 </html>

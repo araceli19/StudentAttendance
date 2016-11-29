@@ -50,76 +50,7 @@ function getStudentLastName(){
 ?>
 <html>
     <head>
-        <style>
-            
-            table {
-                width:50%;}
-            table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;}
-            th, td {
-                padding: 5px;
-                text-align: left;}
-            table#t01 tr:nth-child(even) {
-                background-color: #eee; }
-            table#t01 tr:nth-child(odd) {
-               background-color:#fff; }
-            table#t01 th {
-                background-color: black;
-                color: white;}
-        </style>
-        
-        
+        <link href="style.css" rel="stylesheet" type="text/css">
     </head>
-<body>
-    <div>
-      <h4> Students Found: </h4>
-        
-            <?php 
-                $firstNameData = getStudentFirstName();
-                
-                
-                if(!empty($firstNameData)){
-                   
-                         
-                        echo "<table id='t01'>";
-      
-                        echo "<tr>". "<td>"."Name"."</td>" . "<td>". "Last Name". "</td>"."</tr>";
-                        echo "<tr>";
-                        
-                       foreach ($firstNameData as $record) {
-                         
-                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName'] . "</td>";
-                         echo "</tr>";
-                        }
-                     
-                         echo "</table>";
-                         
-                }   
-            
-                 $lastNameData = getStudentLastName();
-                
-                
-                if(!empty($lastNameData)){
-                   
-                         
-                        echo "<table id='t01'>";
-      
-                        echo "<tr>". "<td>"."Name"."</td>" . "<td>". "Last Name". "</td>"."</tr>";
-                        echo "<tr>";
-                        
-                       foreach ($lastNameData as $record) {
-                         
-                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName'] . "</td>";
-                         echo "</tr>";
-                        }
-                     
-                         echo "</table>";
-                         
-                }   
-                
-            ?>
-        </div>
 
-</body>
 </html>

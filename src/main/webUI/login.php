@@ -3,6 +3,7 @@ session_start();
 
 include 'connection/connection.php';
 
+
 $connection = getDatabaseConnection();
 
 $username = $_POST['Username'];
