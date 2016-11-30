@@ -5,24 +5,46 @@
         header('Location: login.php');
         exit;    
 }?>
+<?php
+    if (isset($_POST['checkin'])) 
+{ 
+   echo "button 1 has been pressed"; 
+}  
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Your Home Page</title>
 
-  <link href="style.css" rel="stylesheet" type="text/css">
-   
+  
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Optional theme -->
+    <link rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <link href="attendance.css" rel="stylesheet" type="text/css">
 </head>
-<script type="text/javascript">
+    
+<body id="backg">
+       
+     <script type="text/javascript">
         
             function alphabetSearchName(let){
                 document.location  = "StudentAttendance.php?fname="+let; }
                 
             function alphabetSearchLastName(let){
                 document.location  = "StudentAttendance.php?lastName="+let; }
-            
+             
         </script>
-<body id="backg">
+        
      <h1 align="center">Attendace</h1>
       <b>Welcome <?php echo $_SESSION['Username'] ?>!</b>
           <b id="logout"><a href="logout.php">Log Out</a></b> <br> </br>
@@ -37,7 +59,7 @@
                     var letterArray = letters.split("");
                     for(var i = 0; i < 26; i++){
                          var fname =letterArray.shift();
-                         byName += '<button name =\''+fname+'\' id =\''+fname+'\' class="mybtns" onclick="alphabetSearchName(\''+fname+'\');">'+fname+'</button>';
+                         byName += '<button  name =\''+fname+'\' id =\''+fname+'\' class="mybtns" onclick="alphabetSearchName(\''+fname+'\');"> '+fname+'</button>&nbsp;';
                     }
             </script>
             <script> document.write(byName); </script>
@@ -50,8 +72,9 @@
                 var letterArray = letters.split("");
                 for(var i = 0; i < 26; i++){
                      var lastName = letterArray.shift();
-                     byLastName += '<button name =\''+lastName+'\' id =\''+lastName+'\' class="mybtns" onclick="alphabetSearchLastName(\''+lastName+'\');">'+lastName+'</button>';
-                }
+                     byLastName += '<button name =\''+lastName+'\' id =\''+lastName+'\' class="mybtns" onclick="alphabetSearchLastName(\''+lastName+'\');">'+lastName+'</button>&nbsp;' ;
+                     
+                }   
             </script>
             <script> document.write(byLastName); </script>
     </div>
@@ -61,35 +84,48 @@
                 if(!empty($firstNameData)){
                      ?>   <h4> Students Found: </h4> <?php
                          
-                        echo "<table id='t01'>";
+                        echo "<table>";
       
-                        echo "<tr>". "<td>"."Name"."</td>" . "<td>". "Last Name". "</td>"."</tr>";
+                        echo "<tr>". "<td>"."<strong>"."Name"."<strong>"."</td>" . 
+                            "<td>"."<strong>". "Last Name"."</strong>". "</td>".
+                            "<td>"."<strong>". "Check In"."</strong>". "</td>"."</tr>";
                         echo "<tr>";
                         
                        foreach ($firstNameData as $record) {
                          
-                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName'] . "</td>";
+                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName']. "</td>";;
+                          echo "<td> <form method='POST' action=''>
+                            <button type='button' class='btn btn-default' aria-label='Left Align'>
+                            <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                            </button>
+                            </form> </td>";
+                        
                          echo "</tr>";
                         }
                      
                          echo "</table>";
                          
                 }   
-            
+           
                  $lastNameData = getStudentLastName();
                 
                 
                 if(!empty($lastNameData)){
                    
                          
-                        echo "<table id='t01'>";
+                        echo "<table >";
       
-                        echo "<tr>". "<td>"."Name"."</td>" . "<td>". "Last Name". "</td>"."</tr>";
+                        echo "<tr>". "<td>"."<strong>"."Name"."</strong>"."</td>" . "<td>"."<strong>". "Last Name". "</strong>"."</td>"."</tr>";
                         echo "<tr>";
                         
-                       foreach ($lastNameData as $record) {
+                       foreach ($lastNameData as $record2) {
                          
-                         echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName'] . "</td>";
+                         echo "<td>" . $record2['name'] ."</td>". "<td>". $record2['lastName'] . "</td>";
+                         echo "<td> <form method='POST' action=''>
+                            <button type='button' class='btn btn-default' aria-label='Left Align'>
+                            <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                            </button>
+                            </form> </td>";
                          echo "</tr>";
                         }
                      

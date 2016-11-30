@@ -41,16 +41,10 @@ function getStudentLastName(){
             $statement = $connection->prepare($sql);
             $statement->execute();
             $result2 = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+     
     }
    
     return $result2;   
 }
 
 ?>
-<html>
-    <head>
-        <link href="style.css" rel="stylesheet" type="text/css">
-    </head>
-
-</html>
