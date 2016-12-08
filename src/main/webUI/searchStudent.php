@@ -1,7 +1,9 @@
 <?php
 include 'connection/connection.php';
 $connection = getDatabaseConnection();
-
+ $id = $_POST['checkIn'];
+ echo $id; 
+ 
 function getStudentFirstName() {
      global $connection; 
      $fname = "";
@@ -46,5 +48,26 @@ function getStudentLastName(){
    
     return $result2;   
 }
+
+function checkStudentIn($ID){
+    global $connection; 
+    $date = date('Y-m-d H:i:s'); //
+    
+    
+   
+    $sql = "INSERT INTO CheckInOut
+            (ID, checkInTime)
+            VALUES(:ID, now())";
+            
+          $namedParameters = array();
+         $namedParameters[':ID'] = $_POST['checkIn']; //caming from form
+         $statement = $connection->prepare($sql);
+         $statement->execute($namedParameters);
+
+            echo "Record has been successfully added";
+        
+            
+}
+
 
 ?>

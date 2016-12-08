@@ -1,16 +1,24 @@
 <?php
     session_start();
+    //include('connection/connection.php');
     include_once("searchStudent.php");
     if (!isset($_SESSION['Username']) ) { //checking whether admin has authenticated
         header('Location: login.php');
-        exit;    
-}?>
-<?php
-    if (isset($_POST['checkin'])) 
-{ 
-   echo "button 1 has been pressed"; 
-}  
+        exit;  
+}
+
+if(isset($_POST['checkIn'])){
+   
+  
+    if(!empty($_POST['checkIn']))
+            checkStudentIn($_POST['checkIn']);
+    
+        //echo "this is".$_POST['checkIn'];
+   
+ }
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +40,8 @@
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href="attendance.css" rel="stylesheet" type="text/css">
 </head>
-    
+
+        
 <body id="backg">
        
      <script type="text/javascript">
@@ -94,12 +103,17 @@
                        foreach ($firstNameData as $record) {
                          
                          echo "<td>" . $record['name'] ."</td>". "<td>". $record['lastName']. "</td>";;
-                          echo "<td> <form method='POST' action=''>
-                            <button type='button' class='btn btn-default' aria-label='Left Align'>
-                            <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
-                            </button>
-                            </form> </td>";
-                        
+                         
+                          echo "<td>" ?></div> <form action="" method="post">
+            
+                            <input type="hidden" name="checkIn" value="<?=$record['ID']?>" />
+                            <input id = "checkin" type="submit" value="check In">
+        
+                                </form>
+                                <br>
+                                </div>
+                    
+                    <?php
                          echo "</tr>";
                         }
                      
@@ -121,11 +135,19 @@
                        foreach ($lastNameData as $record2) {
                          
                          echo "<td>" . $record2['name'] ."</td>". "<td>". $record2['lastName'] . "</td>";
-                         echo "<td> <form method='POST' action=''>
-                            <button type='button' class='btn btn-default' aria-label='Left Align'>
-                            <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
-                            </button>
-                            </form> </td>";
+                         echo "<td>" ?></div> <form action="" method="post">
+            
+                            <input type="hidden" name="checkIn" value="<?=$record2['ID']?>" />
+                            <input id = "checkin" type="submit" value="check In">
+            
+                    </form>
+                    <br>
+                    </div>
+        
+        <?php
+                        
+                        
+                        
                          echo "</tr>";
                         }
                      
@@ -135,5 +157,6 @@
                 
             ?>
         </div>
+        
 </body>
 </html>

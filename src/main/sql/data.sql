@@ -28,7 +28,7 @@
     CREATE TABLE CheckInOut(
         ID INT(6),		
     	date datetime DEFAULT '0000-00-00',
-    	checkInTime DATETIME DEFAULT '00:00:00',
+    	checkInTime DATETIME DEFAULT '00:00:00 00:00:00',
     	activity1 VARCHAR(50),
     	activity2 VARCHAR(50),
     	pickedUpBy VARCHAR(50),
