@@ -2,7 +2,8 @@
 include 'connection/connection.php';
 $connection = getDatabaseConnection();
  $id = $_POST['checkIn'];
- echo $id; 
+ $d2= $_POST['checkIn'];
+ //echo $id; 
  
 function getStudentFirstName() {
      global $connection; 
@@ -51,23 +52,50 @@ function getStudentLastName(){
 
 function checkStudentIn($ID){
     global $connection; 
-    $date = date('Y-m-d H:i:s'); //
-    
-    
    
     $sql = "INSERT INTO CheckInOut
-            (ID, checkInTime)
-            VALUES(:ID, now())";
+            (ID, date, checkInTime)
+            VALUES(:ID, now(), now())";
             
           $namedParameters = array();
          $namedParameters[':ID'] = $_POST['checkIn']; //caming from form
          $statement = $connection->prepare($sql);
          $statement->execute($namedParameters);
-
-            echo "Record has been successfully added";
+         echo date("Y-m-d") . "<br>";
+            echo "Student was checked in!";
         
             
 }
+function checkIfStudentIsCheckedIn($ID){
+    global $connection; 
+    $sql = "SELECT * from CheckInOut where ID =:ID ";
+ 
+    $namedParameters = array();
+    $namedParameters[':ID'] = $ID; //caming from form
+    $statement = $connection->prepare($sql);
+    $statement->execute($namedParameters);
+    $result1 = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+ echo  date("Y-m-d") . "<br>";
+    
+}
 
+function checkStudentOut($ID){
+  global $connection; 
+    $sql = "UPDATE CheckInOut SET checkOutTime=now() WHERE ID= :ID";
+            
+          $namedParameters = array();
+         $namedParameters[':ID'] = $ID; //caming from form
+         $statement = $connection->prepare($sql);
+         $statement->execute($namedParameters);
+echo "Today is " . date("Y-m-d") . "<br>";
+            echo "Student was checked out out successfully!";
+}
+ function updateActivity($activity1,$activity2, $id){
+     
+ }
 
+function selectAllStudentsPresent(){
+    
+}
 ?>
